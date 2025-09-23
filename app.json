@@ -8,6 +8,9 @@
     "scheme": "sampleapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+     "extra": {
+      "clerkPublishableKey": "pk_test_c3VwcmVtZS1wb3Jwb2lzZS0zOS5jbGVyay5hY2NvdW50cy5kZXYk"
+    },
     "ios": {
       "supportsTablet": true
     },
