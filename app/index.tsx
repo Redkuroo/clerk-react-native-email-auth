@@ -6,11 +6,12 @@ import {
   Dimensions,
   Touchable,
   TouchableOpacity,
+  ActivityIndicatorBase,
 } from "react-native";
 import colors from "./shared/colors";
-import { useAuth, useUser, useSSO } from "@clerk/clerk-expo";
-import { use, useCallback, useEffect } from "react";
-import * as WebBrowser from 'expo-web-browser'
+import { useAuth, useUser, useSSO } from "@clerk/clerk-expo"; //18. import useSSO
+import { use, useCallback, useEffect, useState } from "react";
+import * as WebBrowser from 'expo-web-browser' 
 import * as AuthSession from 'expo-auth-session'
 import { useRouter } from "expo-router";
 
@@ -36,17 +37,23 @@ WebBrowser.maybeCompleteAuthSession()
 
 
 export default function Index() {
-  const { isSignedIn } = useAuth()
+  const { isSignedIn } = useAuth()//16. redirect if signed in
+
   const router = useRouter();
   const { user } = useUser();
   console.log(user?.primaryEmailAddress?.emailAddress)
-  useEffect(() => {
-    if (isSignedIn) {
+  const [loading, setLoading] = useState(true);  //24. add loading state
+
+  useEffect(() => { //16. redirect if signed in
+    if (isSignedIn) { 
+    }
+    if (!isSignedIn != undefined) { //24. check for undefined
+      setLoading(false)
     }
   }, [isSignedIn])
 
 
-  useWarmUpBrowser()
+  useWarmUpBrowser() //20. use the useWarmUpBrowser hook
 
   // Use the `useSSO()` hook to access the `startSSOFlow()` method
   const { startSSOFlow } = useSSO()
@@ -94,31 +101,31 @@ export default function Index() {
       style={{
         flex: 1,
         padding: 20,
-        paddingTop: Platform.OS == "android" ? 40 : 30,
+        paddingTop: Platform.OS == "android" ? 40 : 30, //2. add padding for android status bar
         justifyContent: "center",
       }}
     >
       <Image
-        source={require("./../assets/images/Little Dreamtime.jpg")}
+        source={require("./../assets/images/Little Dreamtime.jpg")} //3.add image
         style={{
-          width: Dimensions.get("screen").width * 0.85,
+          width: Dimensions.get("screen").width * 0.85, //4. add style
           height: 280,
           resizeMode: "contain",
         }}
       />
       <View>
-        <Text
+        <Text                 //5. add welcome text
           style={{
             fontSize: 28,
             fontWeight: "bold",
             textAlign: "center",
             marginTop: 20,
-            color: colors.primary,
+            color: colors.primary, //7. use colors file
           }}
         >
           Welcome
         </Text>
-        <Text
+        <Text //8. add subtitle
           style={{
             fontSize: 18,
             textAlign: "center",
@@ -129,7 +136,8 @@ export default function Index() {
           to the Little Dreamtime App
         </Text>
       </View>
-      <TouchableOpacity
+      {/* 25. only show button when not loading */}
+      {!loading && <TouchableOpacity //9. add button view first //10.change to TouchableOpacity
         style={{
           width: "100%",
           padding: 15,
@@ -140,7 +148,12 @@ export default function Index() {
         <Text style={{ textAlign: "center", color: colors.text }}>
           Get Startedd
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity>}
+
+
+      {loading==undefined && //26. show loading indicator
+      <ActivityIndicatorBase size={"large"}/>
+      }
     </View>
   );
 }

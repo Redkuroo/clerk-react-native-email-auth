@@ -6,8 +6,8 @@ import { useEffect } from "react";
 export default function RootLayout() {
 
   return (
-    <ClerkProvider tokenCache={tokenCache}>
-    <Stack screenOptions={{ headerShown: false }}>
+    <ClerkProvider tokenCache={tokenCache}>  {/* 15. add tokenCache prop */}
+    <Stack screenOptions={{ headerShown: false }}> {/* 1. hide header */}
       <Stack.Screen name="index"/>
     </Stack>
 

@@ -5,3 +5,5 @@ export default {
     text: "#333333",
     border: "#dddddd",
 }
+
+//6. add colors file and import to index.tsx
