@@ -39,7 +39,7 @@ WebBrowser.maybeCompleteAuthSession()
 export default function Index() {
   const { isSignedIn } = useAuth()//16. redirect if signed in
 
-  const router = useRouter();
+  const router = useRouter(); //23. add  const router
   const { user } = useUser();
   console.log(user?.primaryEmailAddress?.emailAddress)
   const [loading, setLoading] = useState(true);  //24. add loading state
