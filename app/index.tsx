@@ -4,13 +4,12 @@ import {
   View,
   Image,
   Dimensions,
-  Touchable,
   TouchableOpacity,
-  ActivityIndicatorBase,
+  ActivityIndicator,
 } from "react-native";
 import colors from "./shared/colors";
 import { useAuth, useUser, useSSO } from "@clerk/clerk-expo"; //18. import useSSO
-import { use, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as WebBrowser from 'expo-web-browser' 
 import * as AuthSession from 'expo-auth-session'
 import { useRouter } from "expo-router";
@@ -151,8 +150,8 @@ export default function Index() {
       </TouchableOpacity>}
 
 
-      {loading==undefined && //26. show loading indicator
-      <ActivityIndicatorBase size={"large"}/>
+      {loading && //26. show loading indicator
+      <ActivityIndicator size={"large"}/>
       }
     </View>
   );
