@@ -13,7 +13,8 @@ import { useCallback, useEffect, useState } from "react";
 import * as WebBrowser from 'expo-web-browser' 
 import * as AuthSession from 'expo-auth-session'
 import { useRouter } from "expo-router";
-
+import { doc, setDoc } from "firebase/firestore";
+import { firestoreDb } from "./config/FirebaseConfig";
 
 
 
@@ -45,6 +46,7 @@ export default function Index() {
 
   useEffect(() => { //16. redirect if signed in
     if (isSignedIn) { 
+      router.replace('/(tabs)/Home')
     }
     if (!isSignedIn != undefined) { //24. check for undefined
       setLoading(false)
@@ -67,6 +69,16 @@ export default function Index() {
         // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
         redirectUrl: AuthSession.makeRedirectUri(),
       })
+
+if(signUp){
+  await setDoc(doc(firestoreDb, 'users', signUp?.emailAddress??''),{
+
+    email:signUp.emailAddress,
+    name:signUp.firstName+" "+signUp.lastName,
+    joinDate:Date.now(),
+    credits:20
+  });
+}
 
       // If sign in was successful, set the active session
       if (createdSessionId) {
